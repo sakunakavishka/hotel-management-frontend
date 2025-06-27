@@ -18,7 +18,7 @@ export default function HomePage() {
         </select>
         <botten>Book Now</botten>
         </div>
-        <h1 className="text-white text-[50px]">welcome to the leonine villa in kadawatha</h1>
+        <h1 className="text-white text-[50px]">welcome to the leonine villa</h1>
       </div>
         </>
     )
