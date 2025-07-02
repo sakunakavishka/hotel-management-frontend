@@ -1,4 +1,5 @@
 import './login.css';
+import axios from "axios";
 import { useState } from 'react';
 export default function LoginPage(){
 
@@ -6,7 +7,28 @@ export default function LoginPage(){
     const [password,setPassword] = useState('');
 
     function handleLogin(){
-        console.log(email,password);
+        axios.post(import.meta.env.VITE_BACKEND_URL+'/api/users/login',
+            {
+                email : email,
+                password : password 
+            }
+        ).then(
+            (res)=>{
+
+            console.log(res.data)
+            localStorage.setItem("token",res.data.token)
+            
+            const token = localStorage.getItem("token")
+
+            console.log(token)
+
+        }).catch((err)=>{
+
+            console.log(err)
+
+            })
+        
+        // console.log(email,password);
     }
 
     return (
