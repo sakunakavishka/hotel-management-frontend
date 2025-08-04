@@ -15,12 +15,18 @@ export default function LoginPage(){
         ).then(
             (res)=>{
 
-            console.log(res.data)
+            
             localStorage.setItem("token",res.data.token)
             
             const token = localStorage.getItem("token")
 
-            console.log(token)
+            if(res.data.user.type == "customer"){
+                window.location.href = "/"
+            }else if (res.data.user.type == "admin"){
+                window.location.href ="/admin"
+            }
+
+            
 
         }).catch((err)=>{
 
@@ -43,6 +49,7 @@ export default function LoginPage(){
              onChange={
                 (e) => {
                     setEmail(e.target.value)
+                    // console.log(e.target.value)
                 }
             } 
              />
