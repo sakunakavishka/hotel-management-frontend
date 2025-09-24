@@ -18,7 +18,7 @@ export default function HomePage() {
         </select>
         <button>Book Now</button>
         </div>
-        <h1 className="text-white text-[50px]">welcome to the leonine villa</h1>
+        <h1 className="text-white text-[50px]">Welcome To The Leonine Villa</h1>
       </div>
         </>
     )
