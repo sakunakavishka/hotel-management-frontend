@@ -1,9 +1,9 @@
 
 
-export async function uploadMedia2(file) {
+export async function uploadMedia2(file, preset) {
      const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET2);
+    formData.append("upload_preset", preset);
 
     try {
       const res = await fetch(
@@ -14,9 +14,14 @@ export async function uploadMedia2(file) {
         }
       );
       const data = await res.json();
-      console.log(data);
-    //   setUrl(data.secure_url);
+      console.log(data)
+      return data;
+      
+      
     } catch (err) {
       console.error("Upload error:", err);
     }
   }
+
+
+

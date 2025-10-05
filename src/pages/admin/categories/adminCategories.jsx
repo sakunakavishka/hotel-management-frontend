@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
-
+import { FaP } from "react-icons/fa6";
+import {useNavigate} from "react-router-dom"
 export default function AdminCategories() {
 
   const token = localStorage.getItem("token");
@@ -10,7 +11,7 @@ export default function AdminCategories() {
     window.location.href = "/login"
   }  
 
-  
+  const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
@@ -41,9 +42,17 @@ export default function AdminCategories() {
          toast.error("Failed to delete category");
       })
   }
+  function handlePlusClick(){
+    // console.log("plus clicked");
+    navigate("/admin/add-category");
+  }
 
   return (
     <div className="w-full p-4">
+      <button className ="bg-red-900 w-[60px] h-[60px] rounded-full text-2xl text-center flex justify-center items-center fixed bottom-5 right-5"
+      onClick={()=>handlePlusClick()}>
+        <FaPlus color="white"/>
+      </button>
       <h2 className="text-2xl font-bold mb-4">Categories</h2>
 
       <div className="overflow-x-auto shadow-md rounded-lg">

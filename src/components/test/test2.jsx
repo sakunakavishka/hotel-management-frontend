@@ -6,6 +6,8 @@ export default function TestComponent2(){
    const [file, setFile] = useState(null);
    const [file2,setFile2] = useState(null);
    const [url, setUrl] = useState("");
+   const [url2, setUrl2] = useState("");
+   const preset2=import.meta.env.VITE_UPLOAD_PRESET2
  async function uploadMedia(file) {
      const formData = new FormData();
     formData.append("file", file);
@@ -39,11 +41,12 @@ export default function TestComponent2(){
             {url && <img src={url} alt="Uploaded" className="w-48 mt-4" />}
             <input type="file" onChange={(e) => setFile2(e.target.files[0])} />
             <button
-              onClick={() => uploadMedia2(file2)}
+              onClick={() => uploadMedia2(file2,preset2,setUrl2)}
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
               Upload Image
             </button>
+            {url2 && <img src={url2} alt="Uploaded" className="w-48 mt-4" />}
             
         </div>
     )
