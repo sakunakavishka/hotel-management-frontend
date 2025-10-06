@@ -3,18 +3,21 @@ import axios from "axios";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { FaP } from "react-icons/fa6";
-import {useNavigate} from "react-router-dom"
-export default function AdminCategories() {
+import { useNavigate } from "react-router-dom";
+import UpdateCategory from "./updateCategories";
 
+export default function AdminCategories() {
   const token = localStorage.getItem("token");
-  if (token==null){
-    window.location.href = "/login"
-  }  
+  if (token == null) {
+    window.location.href = "/login";
+  }
 
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
+  const [showUpdateCategoryModel, setShowUpdateCategoryModel] = useState(false);
+  const [row, setRow] = useState([]);
 
   useEffect(() => {
     if (!categoriesLoaded) {
@@ -30,28 +33,33 @@ export default function AdminCategories() {
     }
   }, [categoriesLoaded]);
 
-  function handleDelete (name){
-    axios.delete(import.meta.env.VITE_BACKEND_URL + "/api/category/"+name, {
-      headers:{
-        Authorization: "Bearer "+token
-      }
-      }).then((res)=>{
-        setCategoriesLoaded(false)
-        toast.success("Category deleted successfully");
-      }).catch((err)=>{
-         toast.error("Failed to delete category");
+  function handleDelete(name) {
+    axios
+      .delete(import.meta.env.VITE_BACKEND_URL + "/api/category/" + name, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       })
+      .then((res) => {
+        setCategoriesLoaded(false);
+        toast.success("Category deleted successfully");
+      })
+      .catch((err) => {
+        toast.error("Failed to delete category");
+      });
   }
-  function handlePlusClick(){
+  function handlePlusClick() {
     // console.log("plus clicked");
     navigate("/admin/add-category");
   }
 
   return (
     <div className="w-full p-4">
-      <button className ="bg-red-900 w-[60px] h-[60px] rounded-full text-2xl text-center flex justify-center items-center fixed bottom-5 right-5"
-      onClick={()=>handlePlusClick()}>
-        <FaPlus color="white"/>
+      <button
+        className="bg-red-900 w-[60px] h-[60px] rounded-full text-2xl text-center flex justify-center items-center fixed bottom-5 right-5"
+        onClick={() => handlePlusClick()}
+      >
+        <FaPlus color="white" />
       </button>
       <h2 className="text-2xl font-bold mb-4">Categories</h2>
 
@@ -100,7 +108,10 @@ export default function AdminCategories() {
                   </td>
                   <td className="px-4 py-2 border flex justify-center gap-3">
                     <button
-                      onClick={() => handleEdit(category._id)}
+                      onClick={() => {
+                        setShowUpdateCategoryModel(true);
+                        setRow(category);
+                      }}
                       className="text-blue-500 hover:text-blue-700"
                     >
                       <FaEdit size={18} />
@@ -127,6 +138,7 @@ export default function AdminCategories() {
           </tbody>
         </table>
       </div>
+      {showUpdateCategoryModel && <UpdateCategory row={row} onClose={() => {setShowUpdateCategoryModel(false);setCategoriesLoaded(false)}} />}
     </div>
   );
 }
